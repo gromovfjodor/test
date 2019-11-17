@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестовое задание</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<h1>Рейтинг</h1>
+
+<div class="rating">
+    <div class="rating-item" data-rate="5"></div>
+    <div class="rating-item" data-rate="4"></div>
+    <div class="rating-item" data-rate="3"></div>
+    <div class="rating-item" data-rate="2"></div>
+    <div class="rating-item active" data-rate="1"></div>
+</div>
+
+<script>
+  (function(){
+    let container = document.querySelector('.rating');
+    let items = container.querySelectorAll('.rating-item')
+    container.onclick = function(e) {
+      if( sessionStorage.getItem('check') !=  null ){
+        alert('Вы уже голосовали в данном опросе!');
+        return false;
+      };
+      sessionStorage.setItem('check', 1);
+      if( ! e.target.classList.contains('active') ){
+        items.forEach(function(item){
+          item.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      }
+    }
+  })();
+</script>
+
+
+<h1>Прогрессбар</h1>
+
+<div id="Progress">
+    <div id="Bar">1%</div>
+</div>
+
+<select name="select" id="select">
+    <option value="8">8</option>
+    <option value="16">16</option>
+    <option value="32">32</option>
+    <option value="64">64</option>
+</select>
+
+<button onclick="move()">go</button>
+
+<script>
+  function move() {
+    let elem = document.getElementById("Bar");
+    let value = document.getElementById("select").value;
+    function frame() {
+      elem.style.width = value + '%';
+      elem.innerHTML = value * 1  + '%';
+    }
+    frame();
+  }
+</script>
+
+<h1>Запрос ajax</h1>
+
+<button onclick="send()">Отправить запрос</button>
+
+<div id="message"></div>
+
+<script>
+
+function send(){
+
+  let text = 'Привет мир!';
+
+  const request = new XMLHttpRequest();
+  const url = "index.php";
+  const params = "message=" + text;
+
+  request.open("POST", url, true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  request.addEventListener("readystatechange", () => {
+
+    if(request.readyState === 4 && request.status === 200) {
+       let text = document.getElementById('message');
+       text.Inner
+       console.log(request.responseText);
+    }
+  });
+
+  request.send(params);
+
+}
+
+</script>
+
+
+</body>
+</html>
